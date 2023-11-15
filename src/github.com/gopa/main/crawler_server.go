@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 )
 
 // 昵称对应的真实姓名
@@ -14,7 +15,6 @@ var UserMap = map[string]string{
 }
 
 var userUrl = []string{
-	"https://api.github.com/repos/woshilaixuex/woshilaixuex/commits",
 	"https://api.github.com/repos/woshilaixuex/tanzu-golang-/commits",
 }
 
@@ -43,7 +43,7 @@ type MemberInformation struct {
 // 提交信息
 type Information struct {
 	Message string
-	Data    string
+	Data    time.Time
 	Url     string
 }
 
@@ -51,7 +51,7 @@ type Information struct {
 var MemberInformations []MemberInformation
 var NullInformation = Information{
 	Message: "啥也没有？这么摸!",
-	Data:    "啥也没有？这么摸!",
+	Data:    time.Time{},
 	Url:     "啥也没有？这么摸!",
 }
 
@@ -59,6 +59,8 @@ func GetCommit() ([]MemberInformation, error) {
 	method := "GET"
 	client := &http.Client{}
 	var errs []error
+	location, _ := time.LoadLocation("Asia/Shanghai")
+	//循环链接爬取所有人信息
 	for _, url := range userUrl {
 		req, err := http.NewRequest(method, url, nil)
 		if err != nil {
@@ -91,10 +93,9 @@ func GetCommit() ([]MemberInformation, error) {
 		}
 		meberInformation := new(MemberInformation)
 		meberInformation.Name = UserMap[commits[0].Author.Login]
-		//拷打用
 		information := new(Information)
 		for _, commit := range commits {
-			information.Data = commit.Commit.Author.Date
+			information.Data, _ = time.ParseInLocation(time.RFC3339, commit.Commit.Author.Date, location)
 			information.Message = commit.Commit.Message
 			information.Url = url
 			meberInformation.Information = append(meberInformation.Information, *information)
@@ -105,5 +106,11 @@ func GetCommit() ([]MemberInformation, error) {
 	if len(errs) > 0 {
 		return nil, fmt.Errorf("encountered errors: %w", errs)
 	}
+	//按时间排序（并发用）
+	//for a, _ := range MemberInformations {
+	//	sort.Slice(MemberInformations[a].Information, func(i, j int) bool {
+	//		return MemberInformations[a].Information[j].Data.Before(MemberInformations[a].Information[i].Data)
+	//	})
+	//}
 	return MemberInformations, nil
 }

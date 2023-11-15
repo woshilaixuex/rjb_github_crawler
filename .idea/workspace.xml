@@ -5,17 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18553385-677a-489c-b283-a2ebead82172" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/github.com/gopa/main/crawler_server.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/github.com/gopa/main/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/gopa/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/gopa/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/crawler_server.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/main.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/post_server.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/gopa/main/post_server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/go_build_gopa_main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/go_build_gopa_main.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/gopa/main/crawler_server.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/gopa/main/crawler_server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/gopa/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/gopa/main/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/gopa/main/post_server.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/gopa/main/post_server.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +48,7 @@
     "last_opened_file_path": "E:/gole/gopa/src",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
-    "settings.editor.selected.configurable": "com.goide.configuration.GoLibrariesConfigurableProvider"
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
   <component name="RunManager">
