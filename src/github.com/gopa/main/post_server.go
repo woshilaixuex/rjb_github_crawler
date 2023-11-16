@@ -6,20 +6,21 @@ import (
 	lark "github.com/larksuite/oapi-sdk-go/v3"
 	larkcore "github.com/larksuite/oapi-sdk-go/v3/core"
 	larkbitable "github.com/larksuite/oapi-sdk-go/v3/service/bitable/v1"
+	"gopa/database"
 )
 
 var (
 	app_token         = "HcCtbZnBya5QOAsVHR3cIbvKnBF"
 	table_id          = "tblRSjhUxroSZs7A"
-	user_access_token = "u-cUDFZ_PapfTWBNP2A5vp3ggghnf514XFh0w0hhW02I.e"
+	user_access_token = "u-cFAMXixPl4nXIzSIdm8lF2ggjT7514rHM0w005K02JWu"
 )
 
 // 提交服务
-func PostSever(client *lark.Client, postInformation []MemberInformation) (string, error) {
-	resp, err := GetList(client)
-	if err != nil {
-		return "", err
-	}
+func PostSever(client *lark.Client, postInformation []database.MemberInformation) (string, error) {
+	//resp, err := GetList(client)
+	//if err != nil {
+	//	return "", err
+	//}
 	return "", nil
 }
 
@@ -106,12 +107,12 @@ func AddView(client *lark.Client) {
 }
 
 // 添加列
-func AddList(client *lark.Client, posts []MemberInformation, i int32) {
+func AddList(client *lark.Client, posts database.MemberInformation) {
 	var records []*larkbitable.AppTableRecord
-	for _, info := range posts[i].Information {
+	for _, info := range posts.Information {
 		record := larkbitable.NewAppTableRecordBuilder().
 			Fields(map[string]interface{}{
-				"成员":       posts[i].Name,
+				"成员":       posts.Name,
 				"信息":       info.Message,
 				"日期":       info.Data,
 				"github链接": info.Url,

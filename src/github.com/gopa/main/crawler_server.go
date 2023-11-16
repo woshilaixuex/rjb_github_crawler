@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"gopa/database"
 	"io"
 	"net/http"
 	"time"
@@ -11,7 +12,7 @@ import (
 
 // 昵称对应的真实姓名
 var UserMap = map[string]string{
-	"woshilaixuex": "小明",
+	"woshilaixuex": "林煜钢",
 }
 
 var userUrl = []string{
@@ -34,28 +35,15 @@ type Commit struct {
 	} `json:"author"`
 }
 
-// 成员信息
-type MemberInformation struct {
-	Name        string
-	Information []Information
-}
-
-// 提交信息
-type Information struct {
-	Message string
-	Data    time.Time
-	Url     string
-}
-
 // 成员信息s
-var MemberInformations []MemberInformation
-var NullInformation = Information{
+var MemberInformations []database.MemberInformation
+var NullInformation = database.Information{
 	Message: "啥也没有？这么摸!",
 	Data:    time.Time{},
 	Url:     "啥也没有？这么摸!",
 }
 
-func GetCommit() ([]MemberInformation, error) {
+func GetCommit() ([]database.MemberInformation, error) {
 	method := "GET"
 	client := &http.Client{}
 	var errs []error
@@ -91,9 +79,9 @@ func GetCommit() ([]MemberInformation, error) {
 			errs = append(errs, fmt.Errorf("failed to create request: %w", err))
 			continue
 		}
-		meberInformation := new(MemberInformation)
+		meberInformation := new(database.MemberInformation)
 		meberInformation.Name = UserMap[commits[0].Author.Login]
-		information := new(Information)
+		information := new(database.Information)
 		for _, commit := range commits {
 			information.Data, _ = time.ParseInLocation(time.RFC3339, commit.Commit.Author.Date, location)
 			information.Message = commit.Commit.Message
