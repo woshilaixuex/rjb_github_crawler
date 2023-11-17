@@ -1,4 +1,4 @@
-package main
+package service
 
 import (
 	"bytes"
@@ -15,8 +15,8 @@ var UserMap = map[string]string{
 	"woshilaixuex": "林煜钢",
 }
 
-var userUrl = []string{
-	"https://api.github.com/repos/woshilaixuex/tanzu-golang-/commits",
+var userUrl = map[string]string{
+	"林煜钢": "https://api.github.com/repos/woshilaixuex/tanzu-golang-/commits",
 }
 
 // 返回体（有用的）

@@ -18,10 +18,15 @@ type Information struct {
 	Data                time.Time
 	Url                 string
 }
+type TableUser struct {
+	TableId string `json:"TableId"`
+	Name    string `json:"Name"`
+}
 
 func CreatModel(db *gorm.DB) {
 	db.AutoMigrate(&MemberInformation{})
 	db.AutoMigrate(&Information{})
+	db.AutoMigrate(&TableUser{})
 }
 func SaveMemberInformation(db *gorm.DB, memberInformation MemberInformation) uint {
 	isSave := false
@@ -32,7 +37,7 @@ func SaveMemberInformation(db *gorm.DB, memberInformation MemberInformation) uin
 	for _, information := range memberInformation.Information {
 		information.MemberInformationID = memberInformation.ID
 		var existingInformation Information
-		db.Where("data = ?", information.Data).FirstOrCreate(&existingInformation, information)
+		result := db.Where("data = ?", information.Data).FirstOrCreate(&existingInformation, information)
 		if result.Error == nil && result.RowsAffected > 0 {
 			isSave = true
 		}
@@ -41,4 +46,20 @@ func SaveMemberInformation(db *gorm.DB, memberInformation MemberInformation) uin
 		return 2
 	}
 	return 3
+}
+func SaveTableUser(db *gorm.DB, tbs []TableUser) {
+	for _, tb := range tbs {
+		db.Where("name = ?", tb.Name).FirstOrCreate(&TableUser{}, tb)
+	}
+}
+func SaveOneTableUser(db *gorm.DB, tbs TableUser) {
+	db.Where("name = ?", tbs.Name).FirstOrCreate(&TableUser{}, tbs)
+}
+func SelectTableUser(db *gorm.DB) []TableUser {
+	var tables []TableUser
+	result := db.Find(&tables)
+	if result.Error != nil {
+
+	}
+	return tables
 }
