@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	lark "github.com/larksuite/oapi-sdk-go/v3"
 	larkcore "github.com/larksuite/oapi-sdk-go/v3/core"
 	"gopa/database"
@@ -39,6 +40,7 @@ func DBServer() {
 	if ero != nil {
 		panic(ero)
 	}
+	fmt.Println(postInformation)
 	for _, postinfor := range postInformation {
 		action, saveInformations := database.SaveMemberInformation(db, postinfor)
 		if action == 1 { //没有存过用户

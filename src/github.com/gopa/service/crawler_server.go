@@ -13,11 +13,20 @@ import (
 
 // 昵称对应的真实姓名
 var UserMap = map[string]string{
-	"woshilaixuex": "林煜钢",
+	"isJILE":      "周冠涛",
+	"Elyxiya":     "李留芹",
+	"Mr-LiuDeBao": "刘德宝",
 }
 
-var userUrl = map[string]string{
-	"林煜钢": "https://api.github.com/repos/woshilaixuex/tanzu-golang-/commits",
+var userUrl = []string{
+	"https://api.github.com/repos/isJILE/mine/commits",
+	"https://api.github.com/repos/Elyxiya/RLXY/commits",
+	"https://api.github.com/repos/Mr-LiuDeBao/zuopin/commits",
+}
+var gitUrl = map[string]string{
+	"周冠涛": "https://github.com/isJILE/mine",
+	"李留芹": "https://github.com/Elyxiya/RLXY",
+	"刘德宝": "https://github.com/Mr-LiuDeBao/zuopin",
 }
 
 // 返回体（有用的）
@@ -50,7 +59,7 @@ func GetCommit() ([]database.MemberInformation, error) {
 	var errs []error
 	location, _ := time.LoadLocation("Asia/Shanghai")
 	//循环链接爬取所有人信息
-	for _, url := range userUrl {
+	for i, url := range userUrl {
 		req, err := http.NewRequest(method, url, nil)
 		if err != nil {
 			fmt.Println(err)
@@ -81,12 +90,16 @@ func GetCommit() ([]database.MemberInformation, error) {
 			continue
 		}
 		meberInformation := new(database.MemberInformation)
-		meberInformation.Name = UserMap[commits[0].Author.Login]
+		if i != 0 {
+			meberInformation.Name = UserMap[commits[i].Author.Login]
+		} else {
+			meberInformation.Name = "周冠涛"
+		}
 		information := new(database.Information)
 		for _, commit := range commits {
 			information.Data, _ = time.ParseInLocation(time.RFC3339, commit.Commit.Author.Date, location)
 			information.Message = commit.Commit.Message
-			information.Url = url
+			information.Url = gitUrl[meberInformation.Name]
 			meberInformation.Information = append(meberInformation.Information, *information)
 		}
 		MemberInformations = append(MemberInformations, *meberInformation)
