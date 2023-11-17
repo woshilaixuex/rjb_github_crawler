@@ -7,6 +7,7 @@ import (
 	larkcore "github.com/larksuite/oapi-sdk-go/v3/core"
 	larkbitable "github.com/larksuite/oapi-sdk-go/v3/service/bitable/v1"
 	"gopa/database"
+	"gorm.io/gorm"
 )
 
 var (
@@ -160,7 +161,7 @@ func GetDataTables(client *lark.Client) ([]database.TableUser, error) {
 //}
 
 // 添加列
-func AddList(client *lark.Client, posts database.MemberInformation) {
+func AddList(db *gorm.DB, client *lark.Client, posts database.MemberInformation) {
 	var records []*larkbitable.AppTableRecord
 	for _, info := range posts.Information {
 		record := larkbitable.NewAppTableRecordBuilder().
@@ -175,7 +176,7 @@ func AddList(client *lark.Client, posts database.MemberInformation) {
 	}
 	req := larkbitable.NewBatchCreateAppTableRecordReqBuilder().
 		AppToken(app_token).
-		TableId(table_id).
+		TableId(database.SelectOneTableUser(db, posts.Name).TableId).
 		Body(larkbitable.NewBatchCreateAppTableRecordReqBodyBuilder().
 			Records(records).
 			Build()).

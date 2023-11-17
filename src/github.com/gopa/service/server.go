@@ -39,18 +39,23 @@ func DBServer() {
 		panic(ero)
 	}
 	for _, postinfor := range postInformation {
-		action := database.SaveMemberInformation(db, postinfor)
-		if action == 1 {
+		action, saveInformations := database.SaveMemberInformation(db, postinfor)
+		if action == 1 { //没有存过用户
 			newtabls, err := AddDataTable(client, postinfor.Name)
 			if err != nil {
 				panic(err)
 			}
 			database.SaveOneTableUser(db, *newtabls)
 			database.SaveMemberInformation(db, postinfor)
+			AddList(db, client, postinfor)
 		}
 		if action == 2 {
 			//这边有问题
-			AddList(client, postinfor)
+			newpost := database.MemberInformation{
+				Name:        postinfor.Name,
+				Information: saveInformations,
+			}
+			AddList(db, client, newpost)
 		}
 	}
 }

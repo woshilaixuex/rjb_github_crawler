@@ -28,24 +28,27 @@ func CreatModel(db *gorm.DB) {
 	db.AutoMigrate(&Information{})
 	db.AutoMigrate(&TableUser{})
 }
-func SaveMemberInformation(db *gorm.DB, memberInformation MemberInformation) uint {
+func SaveMemberInformation(db *gorm.DB, memberInformation MemberInformation) (uint, []Information) {
 	isSave := false
 	result := db.Where("name = ?", memberInformation.Name).FirstOrCreate(&memberInformation, MemberInformation{Name: memberInformation.Name})
 	if result.Error == nil && result.RowsAffected > 0 {
-		return 1
+		return 1, nil
 	}
+	var saveInformations []Information
 	for _, information := range memberInformation.Information {
 		information.MemberInformationID = memberInformation.ID
 		var existingInformation Information
 		result := db.Where("data = ?", information.Data).FirstOrCreate(&existingInformation, information)
 		if result.Error == nil && result.RowsAffected > 0 {
+			saveInformations := append(saveInformations, information)
 			isSave = true
 		}
 	}
 	if isSave == true {
-		return 2
+		println(result.RowsAffected)
+		return 2, saveInformations
 	}
-	return 3
+	return 3, nil
 }
 func SaveTableUser(db *gorm.DB, tbs []TableUser) {
 	for _, tb := range tbs {
@@ -62,4 +65,9 @@ func SelectTableUser(db *gorm.DB) []TableUser {
 
 	}
 	return tables
+}
+func SelectOneTableUser(db *gorm.DB, name string) TableUser {
+	var table TableUser
+	db.Where("name = ?", name).First(&table)
+	return table
 }
