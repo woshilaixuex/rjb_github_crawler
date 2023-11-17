@@ -7,6 +7,7 @@ import (
 	"gopa/database"
 	"io"
 	"net/http"
+	"sort"
 	"time"
 )
 
@@ -95,10 +96,10 @@ func GetCommit() ([]database.MemberInformation, error) {
 		return nil, fmt.Errorf("encountered errors: %w", errs)
 	}
 	//按时间排序（并发用）
-	//for a, _ := range MemberInformations {
-	//	sort.Slice(MemberInformations[a].Information, func(i, j int) bool {
-	//		return MemberInformations[a].Information[j].Data.Before(MemberInformations[a].Information[i].Data)
-	//	})
-	//}
+	for a, _ := range MemberInformations {
+		sort.Slice(MemberInformations[a].Information, func(i, j int) bool {
+			return MemberInformations[a].Information[j].Data.Before(MemberInformations[a].Information[i].Data)
+		})
+	}
 	return MemberInformations, nil
 }

@@ -29,6 +29,7 @@ func DBServer() {
 	)
 	//数据同步
 	cltables, err := GetDataTables(client)
+	cltables = cltables[1:]
 	if err != nil {
 		panic(err)
 	}

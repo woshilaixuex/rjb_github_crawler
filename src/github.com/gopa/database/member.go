@@ -40,7 +40,7 @@ func SaveMemberInformation(db *gorm.DB, memberInformation MemberInformation) (ui
 		var existingInformation Information
 		result := db.Where("data = ?", information.Data).FirstOrCreate(&existingInformation, information)
 		if result.Error == nil && result.RowsAffected > 0 {
-			saveInformations := append(saveInformations, information)
+			saveInformations = append(saveInformations, information)
 			isSave = true
 		}
 	}

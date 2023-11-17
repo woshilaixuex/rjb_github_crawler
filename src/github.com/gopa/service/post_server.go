@@ -12,8 +12,7 @@ import (
 
 var (
 	app_token         = "HcCtbZnBya5QOAsVHR3cIbvKnBF"
-	table_id          = "tblRSjhUxroSZs7A"
-	user_access_token = "u-fY2EDlClN6HbXLc59Oo214k07l.5h4jbg0w0hhi80cQX"
+	user_access_token = "u-cXsllxf.FaBHlKb_H3uBLwk07nk5h4p9P0w0kgm80dw_"
 )
 
 // 提交服务
@@ -36,12 +35,18 @@ func AddDataTable(client *lark.Client, name string) (*database.TableUser, error)
 					larkbitable.NewAppTableCreateHeaderBuilder().
 						FieldName(`成员`).
 						Type(1).
+						Build(),
+					larkbitable.NewAppTableCreateHeaderBuilder().
 						FieldName("信息").
 						Type(1).
-						FieldName("时间").
-						Type(5).
+						Build(),
+					larkbitable.NewAppTableCreateHeaderBuilder().
+						FieldName("日期").
+						Type(1).
+						Build(),
+					larkbitable.NewAppTableCreateHeaderBuilder().
 						FieldName("github链接").
-						Type(15).
+						Type(1).
 						Build(),
 				}).
 				Build()).
@@ -201,7 +206,7 @@ func AddList(db *gorm.DB, client *lark.Client, posts database.MemberInformation)
 func GetList(client *lark.Client) (*larkbitable.ListAppTableRecordResp, error) {
 	req := larkbitable.NewListAppTableRecordReqBuilder().
 		AppToken(app_token).
-		TableId(table_id).
+		TableId("").
 		Build()
 	// 发起请求
 	resp, err := client.Bitable.AppTableRecord.List(context.Background(), req, larkcore.WithUserAccessToken(user_access_token))
