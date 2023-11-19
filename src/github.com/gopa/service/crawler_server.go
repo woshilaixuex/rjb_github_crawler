@@ -111,7 +111,7 @@ func GetCommit() ([]database.MemberInformation, error) {
 	//按时间排序（并发用）
 	for a, _ := range MemberInformations {
 		sort.Slice(MemberInformations[a].Information, func(i, j int) bool {
-			return MemberInformations[a].Information[j].Data.Before(MemberInformations[a].Information[i].Data)
+			return MemberInformations[a].Information[i].Data.Before(MemberInformations[a].Information[j].Data)
 		})
 	}
 	return MemberInformations, nil

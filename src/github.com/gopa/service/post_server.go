@@ -12,7 +12,7 @@ import (
 
 var (
 	app_token         = "HcCtbZnBya5QOAsVHR3cIbvKnBF"
-	user_access_token = "u-cXsllxf.FaBHlKb_H3uBLwk07nk5h4p9P0w0kgm80dw_"
+	user_access_token = "u-cGKaV0Qfl1dapnBjpVcCMBggjl5B14hHqMw0gl.02JLq"
 )
 
 // 提交服务
@@ -131,6 +131,7 @@ func GetDataTables(client *lark.Client) ([]database.TableUser, error) {
 			TableId: *item.TableId,
 			Name:    *item.Name,
 		}
+		tableUser.Name = tableUser.Name[:len(tableUser.Name)-18]
 		tables = append(tables, tableUser)
 	}
 	// 业务处理
