@@ -12,7 +12,7 @@ import (
 
 var (
 	app_token         = "HcCtbZnBya5QOAsVHR3cIbvKnBF"
-	user_access_token = "u-cGKaV0Qfl1dapnBjpVcCMBggjl5B14hHqMw0gl.02JLq"
+	user_access_token = "u-fa9.Q8bI5aFE9NbrZCD4Mqggjvf514p3Www051G02EWe"
 )
 
 // 提交服务

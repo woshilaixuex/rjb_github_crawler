@@ -23,6 +23,7 @@ func DBServer() {
 	if err != nil {
 		panic(err)
 	}
+	database.CreatModel(db)
 	client := lark.NewClient(appId, appSecret,
 		lark.WithLogLevel(larkcore.LogLevelDebug),
 		lark.WithReqTimeout(5*time.Second),
